@@ -56,10 +56,9 @@ def apply_watermark(img, text, use_image, image_path, position, custom_x, custom
 
     return img.convert("RGB")
 
-def batch_process(images, *args):
-    watermarked = []
-    for img in images:
-        watermarked.append(apply_watermark(img, *args))
+def batch_process(files, *args):
+    images = [Image.open(file.name).convert("RGB") for file in files]
+    watermarked = [apply_watermark(img, *args) for img in images]
     return watermarked
 
 def on_ui_tabs():
@@ -68,7 +67,7 @@ def on_ui_tabs():
             gr.Markdown("## 🖋️ Batch Watermark Tool")
 
         with gr.Row():
-            input_images = gr.Image(type="pil", label="Images", tool="editor", image_mode="RGB", multiple=True)
+            input_images = gr.File(file_types=[".png", ".jpg", ".jpeg"], label="Upload Images", file_count="multiple")
 
         with gr.Accordion("Watermark Settings", open=True):
             use_image = gr.Checkbox(label="Use Image Watermark", value=False)
