@@ -169,26 +169,26 @@ sd-webui-watermark/
 - ZIP export of batch results
 
 
-Font Credits
-Font Name: Ultimate Pixel Font
-Author(s):
+## Font Credits
+- Font Name: Ultimate Pixel Font
+- Author(s):
 
-Linus Suter – https://codewelt.com
+- Linus Suter – https://codewelt.com
 
-License: GNU General Public License (GPL)
-This font is licensed under the GNU GPL, which allows for free use, modification, and distribution, provided the license terms are respected. For projects embedding this font in software, ensure compliance with GPL font linking exceptions if applicable.
+- License: GNU General Public License (GPL)
+- This font is licensed under the GNU GPL, which allows for free use, modification, and distribution, provided the license terms are respected. For projects embedding this font in software, ensure compliance with GPL font linking exceptions if applicable.
 
-Source: https://codewelt.com
+- Source: https://codewelt.com
 
 
 ## Licence & Contributing
 
 Contributing:
-  1 fork this repository
-  2 make changes
-  3 submit pull request
+  - 1 fork this repository
+  - 2 make changes
+  - 3 submit pull request
 
-License: GNU General Public License (GPLv3) (https://www.gnu.org/licenses/gpl-3.0.en.html)
+- License: GNU General Public License (GPLv3) (https://www.gnu.org/licenses/gpl-3.0.en.html)
 
-Made for [Stable Diffusion WebUI Forge](https://github.com/lllyasviel/stable-diffusion-webui-forge)
+- Made for [Stable Diffusion WebUI Forge](https://github.com/lllyasviel/stable-diffusion-webui-forge)
 
