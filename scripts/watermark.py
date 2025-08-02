@@ -28,6 +28,8 @@ def apply_text_watermark(image: Image.Image, text: str, opacity: int, use_black:
         position = (MARGIN, MARGIN)
     elif position_setting == "top_right":
         position = (image.width - text_size[0] - MARGIN, MARGIN)
+    elif position == "center":
+        position = ((image.width - text_size[0]) // 2, (image.height - text_size[1]) // 2)
     elif position_setting == "bottom_left":
         position = (MARGIN, image.height - text_size[1] - MARGIN)
     elif position_setting == "custom":
@@ -60,6 +62,8 @@ def apply_image_watermark(image: Image.Image, watermark_path: str, max_size: int
         position = (MARGIN, MARGIN)
     elif position_setting == "top_right":
         position = (image.width - watermark.width - MARGIN, MARGIN)
+    elif position == "center":
+        position = ((image.width - watermark.width) // 2, (image.height - watermark.height) // 2)
     elif position_setting == "bottom_left":
         position = (MARGIN, image.height - watermark.height - MARGIN)
     elif position_setting == "custom":

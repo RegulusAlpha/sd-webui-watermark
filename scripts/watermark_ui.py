@@ -96,7 +96,7 @@ def on_ui_tabs():
             use_image = gr.Checkbox(label="Use Image Watermark", value=False)
             watermark_text = gr.Textbox(label="Text Watermark", value="My Watermark")
             watermark_image_path = gr.Textbox(label="Image Path", value="extensions/sd-webui-watermark/assets/default_watermark.png")
-            watermark_position = gr.Dropdown(["bottom_right", "bottom_left", "top_right", "top_left", "custom"], value="bottom_right", label="Position")
+            watermark_position = gr.Dropdown(["bottom_right", "bottom_left", "top_right", "top_left", "center", "custom"],value="bottom_right",label="Position")
             custom_x = gr.Number(label="Custom X", value=0)
             custom_y = gr.Number(label="Custom Y", value=0)
             opacity = gr.Slider(0, 255, value=128, label="Opacity")
