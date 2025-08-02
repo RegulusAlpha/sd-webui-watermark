@@ -56,10 +56,29 @@ def apply_watermark(img, text, use_image, image_path, position, custom_x, custom
 
     return img.convert("RGB")
 
-def batch_process(files, *args):
-    images = [Image.open(file.name).convert("RGB") for file in files]
-    watermarked = [apply_watermark(img, *args) for img in images]
-    return watermarked
+def batch_process(files, input_dir, output_dir, *args):
+    image_paths = [file.name for file in files]
+
+    if input_dir and os.path.isdir(input_dir):
+        for fname in os.listdir(input_dir):
+            if fname.lower().endswith((".png", ".jpg", ".jpeg")):
+                image_paths.append(os.path.join(input_dir, fname))
+
+    results = []
+    for img_path in image_paths:
+        try:
+            img = Image.open(img_path).convert("RGB")
+            watermarked = apply_watermark(img, *args)
+            if output_dir:
+                os.makedirs(output_dir, exist_ok=True)
+                out_path = os.path.join(output_dir, os.path.basename(img_path))
+                watermarked.save(out_path)
+            else:
+                watermarked.save(img_path)
+            results.append(watermarked)
+        except Exception as e:
+            print(f"[Watermark UI] Failed to process {img_path}: {e}")
+    return results
 
 def on_ui_tabs():
     with gr.Blocks(analytics_enabled=False) as watermark_ui:
@@ -67,7 +86,11 @@ def on_ui_tabs():
             gr.Markdown("## 🖋️ Batch Watermark Tool")
 
         with gr.Row():
-            input_images = gr.File(file_types=[".png", ".jpg", ".jpeg"], label="Upload Images", file_count="multiple")
+            uploaded_files = gr.File(file_types=[".png", ".jpg", ".jpeg"], label="Upload Images", file_count="multiple")
+        
+        with gr.Row():
+            input_dir = gr.Textbox(label="Optional Input Directory", placeholder="/path/to/input/images")
+            output_dir = gr.Textbox(label="Optional Output Directory (leave blank to overwrite originals)")
 
         with gr.Accordion("Watermark Settings", open=True):
             use_image = gr.Checkbox(label="Use Image Watermark", value=False)
@@ -80,7 +103,7 @@ def on_ui_tabs():
             font_name = gr.Textbox(label="Font Name", value="UltimatePixelFont")
             font_size = gr.Slider(8, 128, value=16, label="Font Size")
             use_black = gr.Checkbox(label="Use Black Text", value=False)
-            max_size = gr.Slider(32, 1024, value=128, label="Max Image Size")
+            max_size = gr.Slider(32, 1024, value=128, label="Max Image Size (for image watermark)")
 
         run_button = gr.Button("Apply Watermarks")
         output_gallery = gr.Gallery(label="Watermarked Images", columns=4)
@@ -88,7 +111,7 @@ def on_ui_tabs():
         run_button.click(
             fn=batch_process,
             inputs=[
-                input_images,
+                uploaded_files, input_dir, output_dir,
                 watermark_text, use_image, watermark_image_path,
                 watermark_position, custom_x, custom_y,
                 opacity, font_name, font_size, use_black, max_size
