@@ -84,7 +84,7 @@ def on_ui_tabs():
             max_size = gr.Slider(32, 1024, value=128, label="Max Image Size")
 
         run_button = gr.Button("Apply Watermarks")
-        output_gallery = gr.Gallery(label="Watermarked Images").style(grid=4)
+        output_gallery = gr.Gallery(label="Watermarked Images", columns=4)
 
         run_button.click(
             fn=batch_process,
