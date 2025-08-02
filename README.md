@@ -197,5 +197,16 @@ This font is licensed under the GNU GPL, which allows for free use, modification
 
 Source: https://codewelt.com
 
+---
+
+## Licence & Contriibuting
+
+Contributing:
+  1 fork this repository
+  2 make changes
+  3 submit pull request
+
+License: GNU General Public License (GPLv3) (https://www.gnu.org/licenses/gpl-3.0.en.html)
+
 Made for [Stable Diffusion WebUI Forge](https://github.com/lllyasviel/stable-diffusion-webui-forge)
 
