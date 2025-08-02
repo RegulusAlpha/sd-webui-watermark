@@ -101,9 +101,11 @@ To toggle watermarking from the **top bar**, add this to your `config.json`:
 ### 🖋️ Batch Watermarking:
 - Go to the **Watermark** tab
 - Upload images or specify input folder
-- (Optional) set output folder to avoid overwriting
+- (Optional) set output folder | if output folder is not specified the input folder will be overwritten
 - Customize settings
 - Click **Apply Watermarks**
+- Uploaded images will be modified in a TEMP directory, applying watermark will not overwrite the origional file. Save watermarked image from the output box
+- All processed images will be viewable at the bottom in the watermarked images preview box
 
 ---
 
