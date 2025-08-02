@@ -1,5 +1,6 @@
-{
-  "quicksettings": [
-    "watermark_enabled"
-  ]
-}
+"quicksettings": [
+  "watermark_enabled",
+  "watermark_position",     // "bottom_right", "bottom_left", "top_right", "top_left", or "custom"
+  "watermark_custom_x",     // Used if position = "custom"
+  "watermark_custom_y"
+]

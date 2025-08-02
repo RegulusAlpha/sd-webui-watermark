@@ -19,7 +19,23 @@ def apply_text_watermark(image: Image.Image, text: str, opacity: int, use_black:
         font = ImageFont.load_default()
 
     text_size = draw.textsize(text, font=font)
-    position = (image.width - text_size[0] - MARGIN, image.height - text_size[1] - MARGIN)
+
+    position_setting = shared.opts.data.get("watermark_position", "bottom_right")
+    custom_x = int(shared.opts.data.get("watermark_custom_x", 0))
+    custom_y = int(shared.opts.data.get("watermark_custom_y", 0))
+
+    if position_setting == "top_left":
+        position = (MARGIN, MARGIN)
+    elif position_setting == "top_right":
+        position = (image.width - text_size[0] - MARGIN, MARGIN)
+    elif position_setting == "bottom_left":
+        position = (MARGIN, image.height - text_size[1] - MARGIN)
+    elif position_setting == "custom":
+        position = (custom_x, custom_y)
+    else:  # default to bottom_right
+        position = (image.width - text_size[0] - MARGIN, image.height - text_size[1] - MARGIN)
+
+    
     color = (0, 0, 0, opacity) if use_black else (255, 255, 255, opacity)
     draw.text(position, text, fill=color, font=font)
     return image
@@ -36,7 +52,21 @@ def apply_image_watermark(image: Image.Image, watermark_path: str, max_size: int
     alpha = watermark.split()[3].point(lambda p: p * (opacity / 255))
     watermark.putalpha(alpha)
 
-    position = (image.width - watermark.width - MARGIN, image.height - watermark.height - MARGIN)
+    position_setting = shared.opts.data.get("watermark_position", "bottom_right")
+    custom_x = int(shared.opts.data.get("watermark_custom_x", 0))
+    custom_y = int(shared.opts.data.get("watermark_custom_y", 0))
+
+    if position_setting == "top_left":
+        position = (MARGIN, MARGIN)
+    elif position_setting == "top_right":
+        position = (image.width - watermark.width - MARGIN, MARGIN)
+    elif position_setting == "bottom_left":
+        position = (MARGIN, image.height - watermark.height - MARGIN)
+    elif position_setting == "custom":
+        position = (custom_x, custom_y)
+    else:  # default to bottom_right
+        position = (image.width - watermark.width - MARGIN, image.height - watermark.height - MARGIN)
+
     image.paste(watermark, position, watermark)
     return image
 
@@ -82,6 +112,10 @@ def on_ui_settings():
     shared.opts.add_option("watermark_text_black", shared.OptionInfo(False, "Use black text instead of white", section=section))
     shared.opts.add_option("watermark_font", shared.OptionInfo("UltimatePixelFont", "Font name (must be placed in assets/fonts)", section=section))
     shared.opts.add_option("watermark_font_size", shared.OptionInfo(16, "Font size (px)", section=section))
+    shared.opts.add_option("watermark_position", shared.OptionInfo("bottom_right", "Watermark position (bottom_right, bottom_left, top_right, top_left, custom)", section=section))
+    shared.opts.add_option("watermark_custom_x", shared.OptionInfo(0, "Custom X position (if using custom)", section=section))
+    shared.opts.add_option("watermark_custom_y", shared.OptionInfo(0, "Custom Y position (if using custom)", section=section))
+
 
 script_callbacks.on_ui_settings(on_ui_settings)
 script_callbacks.on_image_saved(on_image_saved)
