@@ -2,8 +2,6 @@
 
 This extension automatically adds a customizable **text or image watermark** to images saved in **Stable Diffusion WebUI Forge**, and provides a powerful UI tab for **batch watermarking** existing images.
 
----
-
 ## ✨ Features
 
 ### ✅ Automatic Watermark on Save
@@ -23,8 +21,6 @@ This extension automatically adds a customizable **text or image watermark** to 
 - Fully compatible with **WebUI Forge**
 - Triggered only at image save, lightweight and stable
 
----
-
 ## 🧰 New Watermark Tab (Batch Processing)
 
 A dedicated **"Watermark" tab** is now available in the UI with:
@@ -36,8 +32,6 @@ A dedicated **"Watermark" tab** is now available in the UI with:
   - If set: saves new watermarked images there
 - Independent settings (text/image, position, font, etc.)
 - Live preview gallery of watermarked results
-
----
 
 ## 🖼️ Watermark Placement Options
 
@@ -51,8 +45,6 @@ Set position with:
 
 Can be controlled via **Quicksettings** or in the batch tab.
 
----
-
 ## 📆 Installation
 
 1. **Download & extract** this extension into your `extensions/` folder:
@@ -63,7 +55,6 @@ Can be controlled via **Quicksettings** or in the batch tab.
 
 2. Restart WebUI Forge.
 
----
 
 ## ⚙️ Configuration
 
@@ -89,8 +80,6 @@ To toggle watermarking from the **top bar**, add this to your `config.json`:
 }
 ```
 
----
-
 ## 🚀 How to Use
 
 ### 🔁 Auto Watermark on Generation:
@@ -107,7 +96,6 @@ To toggle watermarking from the **top bar**, add this to your `config.json`:
 - Uploaded images will be modified in a TEMP directory, applying watermark will not overwrite the origional file. Save watermarked image from the output box
 - All processed images will be viewable at the bottom in the watermarked images preview box
 
----
 
 ## 🌤️ Custom Fonts
 
@@ -128,7 +116,6 @@ For example:
 | `DejaVuSans.ttf`            | `DejaVuSans`            |
 | `MyCustomSignatureFont.ttf` | `MyCustomSignatureFont` |
 
----
 
 ## 🧪 Usage Notes
 
@@ -136,7 +123,6 @@ For example:
 * Watermark will only appear if **enabled** in settings **and/or** checked in the Quicksettings bar.
 * Settings changes apply immediately after clicking **Apply Settings**.
 
----
 
 ## 🧼 Uninstall
 
@@ -148,7 +134,6 @@ extensions/sd-webui-watermark/
 
 And restart WebUI Forge.
 
----
 
 ## 🛠️ Troubleshooting
 
@@ -162,7 +147,6 @@ And restart WebUI Forge.
   * Ensure path is correct (relative to WebUI folder)
   * Image should be a transparent `.png`
 
----
 
 ## 📁 Folder Structure
 
@@ -184,7 +168,6 @@ sd-webui-watermark/
 - Font auto-detection from assets
 - ZIP export of batch results
 
----
 
 Font Credits
 Font Name: Ultimate Pixel Font
@@ -197,9 +180,8 @@ This font is licensed under the GNU GPL, which allows for free use, modification
 
 Source: https://codewelt.com
 
----
 
-## Licence & Contriibuting
+## Licence & Contributing
 
 Contributing:
   1 fork this repository
