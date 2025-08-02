@@ -1,27 +1,55 @@
 # 🔖 SD WebUI Watermark Extension
 
-This extension automatically adds a customizable **text or image watermark** to the bottom-right of saved generations in **Stable Diffusion WebUI Forge**.
+This extension automatically adds a customizable **text or image watermark** to images saved in **Stable Diffusion WebUI Forge**, and provides a powerful UI tab for **batch watermarking** existing images.
 
 ---
 
 ## ✨ Features
 
-* ✅ Enable/disable watermark globally or via Quicksettings checkbox
-* 🔋️ **Text watermark** mode:
+### ✅ Automatic Watermark on Save
+- Enable/disable watermark globally or via Quicksettings
+- **Text watermark mode**:
+  - Custom string
+  - Font (must be `.ttf` in `assets/fonts/`)
+  - Adjustable font size and opacity
+  - White or black text color
+- **Image watermark mode**:
+  - Upload transparent PNG
+  - Auto-resizes to max dimension
+  - Adjustable opacity
+- **Watermark placement**:
+  - Bottom-right (default), bottom-left, top-right, top-left
+  - Or set custom X/Y coordinates
+- Fully compatible with **WebUI Forge**
+- Triggered only at image save, lightweight and stable
 
-  * Custom watermark string
-  * Set font name (must match `.ttf` in `assets/fonts/`)
-  * Adjustable font size
-  * Choose text color: white or black
-* 🖼️ **Image watermark** mode:
+---
 
-  * Upload your own transparent PNG
-  * Resize with a max dimension limit
-  * Adjustable opacity
-* 📊 Watermark placement: bottom-right with customizable margins
-* 📂 Watermark is burned into the final saved image
-* ⚡ Fully compatible with **WebUI Forge**
-* 🧠 Stable and lightweight, triggered only at image save
+## 🧰 New Watermark Tab (Batch Processing)
+
+A dedicated **"Watermark" tab** is now available in the UI with:
+
+- Drag-and-drop upload for multiple images
+- Optional input directory to include folder contents
+- Optional output directory:
+  - If blank: overwrites images in place
+  - If set: saves new watermarked images there
+- Independent settings (text/image, position, font, etc.)
+- Live preview gallery of watermarked results
+
+---
+
+## 🖼️ Watermark Placement Options
+
+Set position with:
+
+- `"bottom_right"` (default)
+- `"bottom_left"`
+- `"top_right"`
+- `"top_left"`
+- `"custom"` (with `watermark_custom_x` and `watermark_custom_y`)
+
+Can be controlled via **Quicksettings** or in the batch tab.
 
 ---
 
@@ -60,6 +88,22 @@ To toggle watermarking from the **top bar**, add this to your `config.json`:
   "quicksettings": ["sd_model_checkpoint", "watermark_enabled"]
 }
 ```
+
+---
+
+## 🚀 How to Use
+
+### 🔁 Auto Watermark on Generation:
+- Go to `Settings > Watermark`
+- Enable `watermark_enabled`
+- Customize your options
+
+### 🖋️ Batch Watermarking:
+- Go to the **Watermark** tab
+- Upload images or specify input folder
+- (Optional) set output folder to avoid overwriting
+- Customize settings
+- Click **Apply Watermarks**
 
 ---
 
@@ -130,6 +174,13 @@ sd-webui-watermark/
 │       └── DejaVuSans.ttf
 └── README.md
 ```
+
+## 💡 Planned Features
+
+- Filename suffix instead of overwrite
+- Folder recursion support
+- Font auto-detection from assets
+- ZIP export of batch results
 
 ---
 
