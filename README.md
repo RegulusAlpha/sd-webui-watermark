@@ -1,29 +1,49 @@
 # 🔖 SD WebUI Watermark Extension
 
-This extension automatically adds a customizable **text or image watermark** to the bottom-right of saved generations in **Stable Diffusion WebUI Forge**.
-
----
+This extension automatically adds a customizable **text or image watermark** to images saved in **Stable Diffusion WebUI Forge**, and provides a powerful UI tab for **batch watermarking** existing images.
 
 ## ✨ Features
 
-* ✅ Enable/disable watermark globally or via Quicksettings checkbox
-* 🔋️ **Text watermark** mode:
+### ✅ Automatic Watermark on Save
+- Enable/disable watermark globally or via Quicksettings
+- **Text watermark mode**:
+  - Custom string
+  - Font (must be `.ttf` in `assets/fonts/`)
+  - Adjustable font size and opacity
+  - White or black text color
+- **Image watermark mode**:
+  - Upload transparent PNG
+  - Auto-resizes to max dimension
+  - Adjustable opacity
+- **Watermark placement**:
+  - Bottom-right (default), bottom-left, top-right, top-left
+  - Or set custom X/Y coordinates
+- Fully compatible with **WebUI Forge**
+- Triggered only at image save, lightweight and stable
 
-  * Custom watermark string
-  * Set font name (must match `.ttf` in `assets/fonts/`)
-  * Adjustable font size
-  * Choose text color: white or black
-* 🖼️ **Image watermark** mode:
+## 🧰 New Watermark Tab (Batch Processing)
 
-  * Upload your own transparent PNG
-  * Resize with a max dimension limit
-  * Adjustable opacity
-* 📊 Watermark placement: bottom-right with customizable margins
-* 📂 Watermark is burned into the final saved image
-* ⚡ Fully compatible with **WebUI Forge**
-* 🧠 Stable and lightweight, triggered only at image save
+A dedicated **"Watermark" tab** is now available in the UI with:
 
----
+- Drag-and-drop upload for multiple images
+- Optional input directory to include folder contents
+- Optional output directory:
+  - If blank: overwrites images in place
+  - If set: saves new watermarked images there
+- Independent settings (text/image, position, font, etc.)
+- Live preview gallery of watermarked results
+
+## 🖼️ Watermark Placement Options
+
+Set position with:
+
+- `"bottom_right"` (default)
+- `"bottom_left"`
+- `"top_right"`
+- `"top_left"`
+- `"custom"` (with `watermark_custom_x` and `watermark_custom_y`)
+
+Can be controlled via **Quicksettings** or in the batch tab.
 
 ## 📆 Installation
 
@@ -35,7 +55,6 @@ This extension automatically adds a customizable **text or image watermark** to 
 
 2. Restart WebUI Forge.
 
----
 
 ## ⚙️ Configuration
 
@@ -61,7 +80,22 @@ To toggle watermarking from the **top bar**, add this to your `config.json`:
 }
 ```
 
----
+## 🚀 How to Use
+
+### 🔁 Auto Watermark on Generation:
+- Go to `Settings > Watermark`
+- Enable `watermark_enabled`
+- Customize your options
+
+### 🖋️ Batch Watermarking:
+- Go to the **Watermark** tab
+- Upload images or specify input folder
+- (Optional) set output folder | if output folder is not specified the input folder will be overwritten
+- Customize settings
+- Click **Apply Watermarks**
+- Uploaded images will be modified in a TEMP directory, applying watermark will not overwrite the origional file. Save watermarked image from the output box
+- All processed images will be viewable at the bottom in the watermarked images preview box
+
 
 ## 🌤️ Custom Fonts
 
@@ -82,7 +116,6 @@ For example:
 | `DejaVuSans.ttf`            | `DejaVuSans`            |
 | `MyCustomSignatureFont.ttf` | `MyCustomSignatureFont` |
 
----
 
 ## 🧪 Usage Notes
 
@@ -90,7 +123,6 @@ For example:
 * Watermark will only appear if **enabled** in settings **and/or** checked in the Quicksettings bar.
 * Settings changes apply immediately after clicking **Apply Settings**.
 
----
 
 ## 🧼 Uninstall
 
@@ -102,7 +134,6 @@ extensions/sd-webui-watermark/
 
 And restart WebUI Forge.
 
----
 
 ## 🛠️ Troubleshooting
 
@@ -116,7 +147,6 @@ And restart WebUI Forge.
   * Ensure path is correct (relative to WebUI folder)
   * Image should be a transparent `.png`
 
----
 
 ## 📁 Folder Structure
 
@@ -131,18 +161,34 @@ sd-webui-watermark/
 └── README.md
 ```
 
----
+## 💡 Planned Features
 
-Font Credits
-Font Name: Ultimate Pixel Font
-Author(s):
+- Filename suffix instead of overwrite
+- Folder recursion support
+- Font auto-detection from assets
+- ZIP export of batch results
 
-Linus Suter – https://codewelt.com
 
-License: GNU General Public License (GPL)
-This font is licensed under the GNU GPL, which allows for free use, modification, and distribution, provided the license terms are respected. For projects embedding this font in software, ensure compliance with GPL font linking exceptions if applicable.
+## Font Credits
+- Font Name: Ultimate Pixel Font
+- Author(s):
 
-Source: https://codewelt.com
+- Linus Suter – https://codewelt.com
 
-Made for [Stable Diffusion WebUI Forge](https://github.com/lllyasviel/stable-diffusion-webui-forge)
+- License: GNU General Public License (GPL)
+- This font is licensed under the GNU GPL, which allows for free use, modification, and distribution, provided the license terms are respected. For projects embedding this font in software, ensure compliance with GPL font linking exceptions if applicable.
+
+- Source: https://codewelt.com
+
+
+## Licence & Contributing
+
+Contributing:
+  - 1 fork this repository
+  - 2 make changes
+  - 3 submit pull request
+
+- License: GNU General Public License (GPLv3) (https://www.gnu.org/licenses/gpl-3.0.en.html)
+
+- Made for [Stable Diffusion WebUI Forge](https://github.com/lllyasviel/stable-diffusion-webui-forge)
 
