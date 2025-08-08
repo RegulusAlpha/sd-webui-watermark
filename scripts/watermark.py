@@ -147,7 +147,7 @@ def on_ui_settings():
     shared.opts.add_option("watermark_max_size", shared.OptionInfo(64, "Max watermark size (px)", section=section))
     #shared.opts.add_option("watermark_text_black", shared.OptionInfo(False, "Use black text instead of white", section=section))
     #shared.opts.add_option("watermark_text_color",shared.OptionInfo("#FFFFFF", "Text color (#RRGGBB or R,G,B)", section=section))
-    shared.opts.add_option("watermark_text_color",shared.OptionInfo("#FFFFFF","Text color",component=gr.ColorPicker,component_args={"label": "Text color", "value": "#FFFFFF"},section=section,))
+    shared.opts.add_option("watermark_text_color",shared.OptionInfo("#FFFFFF","Text color",component=gr.ColorPicker,component_args={"value": "#FFFFFF"}, section=section,))
     shared.opts.add_option("watermark_font", shared.OptionInfo("UltimatePixelFont", "Font name (must be placed in assets/fonts)", section=section))
     shared.opts.add_option("watermark_font_size", shared.OptionInfo(16, "Font size (px)", section=section))
     shared.opts.add_option("watermark_position", shared.OptionInfo("bottom_right", "Watermark position (bottom_right, bottom_left, top_right, top_left, custom)", section=section))
