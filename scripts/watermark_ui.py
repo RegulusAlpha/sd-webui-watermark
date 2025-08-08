@@ -5,7 +5,7 @@ from modules import script_callbacks
 
 MARGIN = 10
 
-def apply_watermark(img, text, use_image, image_path, position, custom_x, custom_y, opacity, font_name, font_size, use_black, max_size):
+def apply_watermark(img, text, use_image, image_path, position, custom_x, custom_y, opacity, font_name, font_size, text_color, max_size):
     img = img.convert("RGBA")
 
     if use_image:
@@ -51,8 +51,9 @@ def apply_watermark(img, text, use_image, image_path, position, custom_x, custom
         else:
             pos = (img.width - text_size[0] - MARGIN, img.height - text_size[1] - MARGIN)
 
-        color = (0, 0, 0, opacity) if use_black else (255, 255, 255, opacity)
-        draw.text(pos, text, fill=color, font=font)
+        r, g, b = parse_rgb(text_color)
+        fill = (r, g, b, opacity)
+        draw.text(pos, text, font=font, fill=fill)
 
     return img.convert("RGB")
 
@@ -80,6 +81,26 @@ def batch_process(files, input_dir, output_dir, *args):
             print(f"[Watermark UI] Failed to process {img_path}: {e}")
     return results
 
+def parse_rgb(color_str: str):
+    # Accept "#RRGGBB" or "R,G,B"
+    try:
+        s = color_str.strip()
+        if s.startswith("#"):
+            s = s.lstrip("#")
+            if len(s) == 6:
+                r = int(s[0:2], 16)
+                g = int(s[2:4], 16)
+                b = int(s[4:6], 16)
+                return (r, g, b)
+        else:
+            parts = [int(p) for p in s.split(",")]
+            if len(parts) == 3:
+                return tuple(max(0, min(255, v)) for v in parts)
+    except Exception:
+        pass
+    # Fallback to white
+    return (255, 255, 255)
+
 def on_ui_tabs():
     with gr.Blocks(analytics_enabled=False) as watermark_ui:
         with gr.Row():
@@ -102,7 +123,8 @@ def on_ui_tabs():
             opacity = gr.Slider(0, 255, value=128, label="Opacity")
             font_name = gr.Textbox(label="Font Name", value="UltimatePixelFont")
             font_size = gr.Slider(8, 128, value=16, label="Font Size")
-            use_black = gr.Checkbox(label="Use Black Text", value=False)
+            #use_black = gr.Checkbox(label="Use Black Text", value=False)
+            text_color = gr.ColorPicker(label="Text color", value="#FFFFFF")
             max_size = gr.Slider(32, 1024, value=128, label="Max Image Size (for image watermark)")
 
         run_button = gr.Button("Apply Watermarks")
@@ -114,7 +136,7 @@ def on_ui_tabs():
                 uploaded_files, input_dir, output_dir,
                 watermark_text, use_image, watermark_image_path,
                 watermark_position, custom_x, custom_y,
-                opacity, font_name, font_size, use_black, max_size
+                opacity, font_name, font_size, text_color, max_size
             ],
             outputs=output_gallery
         )

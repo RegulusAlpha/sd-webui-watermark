@@ -10,7 +10,7 @@ This extension automatically adds a customizable **text or image watermark** to 
   - Custom string
   - Font (must be `.ttf` in `assets/fonts/`)
   - Adjustable font size and opacity
-  - White or black text color
+  - Custom text color
 - **Image watermark mode**:
   - Upload transparent PNG
   - Auto-resizes to max dimension
@@ -63,7 +63,7 @@ Can be controlled via **Quicksettings** or in the batch tab.
 * **Enable watermark** (toggle)
 * **Watermark type**: `text` or `image`
 * **Text string**
-* **Text color**: toggle black or white
+* **Text color**: custom text color using RGB
 * **Font name**: must match a `.ttf` file in `assets/fonts/`
 * **Font size**: in pixels
 * **Image watermark path**: relative to your WebUI folder

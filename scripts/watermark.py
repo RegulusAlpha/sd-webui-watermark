@@ -10,7 +10,7 @@ def get_font_path(font_name):
     font_file = f"{font_name}.ttf"
     return os.path.join(font_dir, font_file)
 
-def apply_text_watermark(image: Image.Image, text: str, opacity: int, use_black: bool, font_name: str, font_size: int):
+def apply_text_watermark(image: Image.Image, text: str, opacity: int, text_color: str, font_name: str, font_size: int):
     draw = ImageDraw.Draw(image)
     try:
         font_path = get_font_path(font_name)
@@ -38,7 +38,8 @@ def apply_text_watermark(image: Image.Image, text: str, opacity: int, use_black:
         position = (image.width - text_size[0] - MARGIN, image.height - text_size[1] - MARGIN)
 
     
-    color = (0, 0, 0, opacity) if use_black else (255, 255, 255, opacity)
+    r, g, b = parse_rgb(text_color)
+    color = (r, g, b, opacity)
     draw.text(position, text, fill=color, font=font)
     return image
 
@@ -94,15 +95,45 @@ def on_image_saved(params):
             img = apply_image_watermark(img, image_path, max_size, opacity)
         else:
             text = getattr(shared.opts, "watermark_text", "My Watermark")
-            use_black = getattr(shared.opts, "watermark_text_black", False)
+            color = getattr(shared.opts, "watermark_text_color", None)
+            if not color or color.strip() == "":
+                color = "#000000" if shared.opts.watermark_text_black else "#FFFFFF"
+
             font_name = getattr(shared.opts, "watermark_font", "UltimatePixelFont")
             font_size = int(getattr(shared.opts, "watermark_font_size", 16))
-            img = apply_text_watermark(img, text, opacity, use_black, font_name, font_size)
+            img = apply_text_watermark(
+                img,
+                shared.opts.watermark_text,
+                shared.opts.watermark_opacity,
+                color,
+                shared.opts.watermark_font,
+                shared.opts.watermark_font_size
+                )
 
         img.convert("RGB").save(path)
 
     except Exception as e:
         print(f"[Watermark Extension] Failed to apply watermark: {e}")
+
+def parse_rgb(color_str: str):
+    # Accept "#RRGGBB" or "R,G,B"
+    try:
+        s = color_str.strip()
+        if s.startswith("#"):
+            s = s.lstrip("#")
+            if len(s) == 6:
+                r = int(s[0:2], 16)
+                g = int(s[2:4], 16)
+                b = int(s[4:6], 16)
+                return (r, g, b)
+        else:
+            parts = [int(p) for p in s.split(",")]
+            if len(parts) == 3:
+                return tuple(max(0, min(255, v)) for v in parts)
+    except Exception:
+        pass
+    # Fallback to white
+    return (255, 255, 255)
 
 def on_ui_settings():
     section = ("watermark", "Watermark")
@@ -113,7 +144,8 @@ def on_ui_settings():
     shared.opts.add_option("watermark_image_path", shared.OptionInfo("extensions/sd-webui-watermark/assets/default_watermark.png", "Path to PNG watermark", section=section))
     shared.opts.add_option("watermark_opacity", shared.OptionInfo(128, "Opacity (0-255)", section=section))
     shared.opts.add_option("watermark_max_size", shared.OptionInfo(64, "Max watermark size (px)", section=section))
-    shared.opts.add_option("watermark_text_black", shared.OptionInfo(False, "Use black text instead of white", section=section))
+    #shared.opts.add_option("watermark_text_black", shared.OptionInfo(False, "Use black text instead of white", section=section))
+    shared.opts.add_option("watermark_text_color",shared.OptionInfo("#FFFFFF", "Text color (#RRGGBB or R,G,B)", section=section))
     shared.opts.add_option("watermark_font", shared.OptionInfo("UltimatePixelFont", "Font name (must be placed in assets/fonts)", section=section))
     shared.opts.add_option("watermark_font_size", shared.OptionInfo(16, "Font size (px)", section=section))
     shared.opts.add_option("watermark_position", shared.OptionInfo("bottom_right", "Watermark position (bottom_right, bottom_left, top_right, top_left, custom)", section=section))
